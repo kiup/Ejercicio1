@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Address;
 use App\Seller;
 use Illuminate\Http\Request;
 use Response;
@@ -9,12 +11,13 @@ class SellersController extends Controller
 {
     public function index()
     {
-      return Response::json(Seller:all());
+      return Response::json(Seller::all());
     }
 
-    public function show(Seller $seller)
+    public function show($seller)
     {
-      return $seller;
+      $sellerInstance = Seller::findOrFail($seller);
+      return $sellerInstance;
     }
 
     public function store(Request $request)
@@ -27,7 +30,7 @@ class SellersController extends Controller
     public function update(Request $request, Seller $seller)
     {
       $attributes = $request->all();
-      $seller->update($attributes);//actualiza la información
+      $seller -> update($attributes);//actualiza la información
       return $seller;
     }
 
@@ -35,5 +38,21 @@ class SellersController extends Controller
     {
       $seller->delete();
       return Response::json([],200);
+    }
+
+    public function store_address(Request $request, Seller $seller)
+    {
+      $attributes  = $request->all();
+      $address = new Address($attributes);
+      $seller->address()->save($address);
+      return Response::json($address);
+    }
+
+    public function update_address(Request $request, Seller $seller)
+    {
+      $attributes  = $request->all();
+      $address = $seller->address;
+      $address->update($attributes);
+      return Response::json($address);
     }
 }
