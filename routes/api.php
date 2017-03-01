@@ -22,8 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('sellers', 'SellersController@index');
 Route::get('sellers/{id}', 'SellersController@show');
 Route::post('sellers', 'SellersController@store');
-Route::put('sellers/{seller}', 'SellersController@update');
-Route::patch('sellers/{seller}', 'SellersController@update');
+Route::put('sellers/{seller}', 'SellersController@total_update');
+Route::patch('sellers/{seller}', 'SellersController@partial_update');
 Route::delete('sellers/{seller}', 'SellersController@destroy');
 
 //Rutas direcciones-vendedor
@@ -34,14 +34,12 @@ Route::put('sellers/{seller}/address', 'SellersController@update_address');
 Route::get('products','ProductsController@index');
 Route::get('products/{id}', 'ProductsController@show');
 Route::post('products', 'ProductsController@store');
-Route::put('products/{products}', 'ProductsController@update');
-Route::patch('products/{products}', 'ProductsController@update');
+Route::put('products/{products}', 'ProductsController@total_update');
+Route::patch('products/{products}', 'ProductsController@partial_update');
 Route::delete('products/{products}', 'ProductsController@destroy');
 
 //Rutas reseñas
-Route::post('products/{products}/review', 'ProductsController@store_review');
-Route::get('products/{products}/reviews', 'ProductsController@index_review');
+Route::post('products/{products}/reviews', 'ProductsController@store_review');
+Route::get('products/{products}/reviews', 'ProductsController@show_reviews');
 Route::delete('products/{products}/review', 'ProductsController@destroy_review');
 
-//Rutas etiquetas
-Route::get('labels','ProductsController@index_label');
